@@ -1,4 +1,4 @@
-import os
+from pathlib import Path
 from collections import defaultdict
 
 def process_file(filename):
@@ -23,9 +23,9 @@ def process_file(filename):
 
 def main():
     filename = "input.txt"
-    current_folder = os.path.dirname(os.path.abspath(__file__))
-    file_path = os.path.join(current_folder, filename)
-    process_file(file_path)
+    current_dir = Path(__file__).parent
+    input_file = current_dir / filename
+    process_file(input_file)
 
 
 if __name__ == "__main__":
