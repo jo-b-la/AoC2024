@@ -1,0 +1,36 @@
+import os
+
+def process_file(filename):
+ 
+    left_numbers = []
+    right_numbers = []
+    
+    # Read the file and split into two lists
+    with open(filename, 'r') as file:
+        for line in file:
+
+            left, right = map(int, line.strip().split())
+            left_numbers.append(left)
+            right_numbers.append(right)
+    
+    # Sort both lists separately
+    left_numbers.sort()
+    right_numbers.sort()
+    
+    total_difference = 0
+
+    for left, right in zip(left_numbers, right_numbers):
+        difference = abs(left - right)  # Using absolute difference
+        total_difference += difference
+
+    print("The sum of the differences is:", total_difference)
+
+def main():
+    filename = "input.txt"  
+    current_folder = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(current_folder, filename)
+    process_file(file_path)
+
+
+if __name__ == "__main__":
+    main()
