@@ -1,0 +1,32 @@
+import os
+from collections import defaultdict
+
+def process_file(filename):
+
+    left_numbers = []
+    right_numbers =  defaultdict(int)
+
+    with open(filename, 'r') as file:
+        for line in file:
+
+            left, right = map(int, line.strip().split())
+            left_numbers.append(left)
+            right_numbers[right] += 1
+
+
+    total_similarity = 0
+
+    for left in left_numbers:
+        total_similarity += (left*right_numbers[left])
+
+    print("The sum of all similarities is:", total_similarity)
+
+def main():
+    filename = "input.txt"
+    current_folder = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(current_folder, filename)
+    process_file(file_path)
+
+
+if __name__ == "__main__":
+    main()

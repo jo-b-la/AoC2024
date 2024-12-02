@@ -1,0 +1,48 @@
+import os
+
+
+
+
+def check_array(numbers):
+    if len(numbers) < 2:
+        return True
+
+    is_increasing = numbers == sorted(numbers)
+    is_decreasing = numbers == sorted(numbers, reverse=True)
+
+    if not (is_increasing or is_decreasing):
+        return False
+
+    return  all(1 <= abs(numbers[i] - numbers[i + 1]) <=3 for i in range(len(numbers) - 1))
+
+
+def check_with_dampener (numbers):
+    if check_array(numbers):
+        return True
+
+    return  any(check_array(numbers[:i] + numbers[i + 1 :]) for i in range(len(numbers)))
+
+
+def process_file(filename):
+
+    total_ok = 0
+
+    with open(filename, 'r') as file:
+
+        for line in file:
+            numbers = [int(x) for x in line.split()]
+            if check_with_dampener(numbers):
+                total_ok += 1
+
+
+    print("# of save :", total_ok)
+
+def main():
+    filename = "input.txt"
+    current_folder = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(current_folder, filename)
+    process_file(file_path)
+
+
+if __name__ == "__main__":
+    main()
