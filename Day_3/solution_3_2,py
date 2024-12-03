@@ -1,0 +1,40 @@
+import re
+from pathlib import Path
+
+def process_file(file_path):
+
+    with open(file_path, "r") as file:
+        content = file.read()
+
+    pattern = r"((?:don't\(\))|(?:do\(\)))|(?:mul\((\d{1,3}),(\d{1,3})\))"
+
+    total = 0
+
+    # Find all matches and process them
+    matches = re.finditer(pattern, content)
+    enabled = True
+    for match in matches:
+        match match.group(1):
+                case "don't()":
+                  enabled=False
+                case 'do()':
+                    enabled = True
+                case _:
+                    num1 = int(match.group(2))
+                    num2 = int(match.group(3))
+                    if enabled:
+                        total += (num1 * num2)
+
+    print(total)
+
+
+
+def main():
+    filename = "input.txt"
+    current_dir = Path(__file__).parent
+    input_file = current_dir / filename
+    process_file(input_file)
+
+
+if __name__ == "__main__":
+    main()
